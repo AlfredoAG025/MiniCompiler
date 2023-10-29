@@ -1,0 +1,5 @@
+# this is my code
+a = 1;
+b = 2;
+c = a + a;
+d = 5.2;

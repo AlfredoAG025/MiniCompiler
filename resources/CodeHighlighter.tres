@@ -1,0 +1,16 @@
+[gd_resource type="CodeHighlighter" format=3 uid="uid://dprdmkadh8tws"]
+
+[resource]
+number_color = Color(0.415686, 0.835294, 0.733333, 1)
+symbol_color = Color(0.501961, 0.717647, 0.960784, 1)
+function_color = Color(0.0627451, 0.443137, 0.67451, 1)
+keyword_colors = {
+"else": Color(0.83, 0.415, 0.80925, 1),
+"if": Color(0.831373, 0.415686, 0.807843, 1),
+"int": Color(0.83, 0.415, 0.80925, 1),
+"while": Color(0.83, 0.415, 0.80925, 1)
+}
+color_regions = {
+"\" \"": Color(0.831373, 0.654902, 0.537255, 1),
+"#": Color(0.345098, 0.345098, 0.345098, 1)
+}
