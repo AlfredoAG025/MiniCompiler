@@ -207,6 +207,13 @@ It can be a compiler or an interpreter, just need to do the process every typed 
 **//TODO**
 ___
 
+### Incident Log
+
+| Date | Incident | Solution |
+| ----------- | ----------- | ----------- |
+|  2023/10/29 at 15:00 | Lexemas are misformed | The function substr in Godot Engine, takes the start position and the length of the substring. I thought that I nedeed to pass the end position, for that my lexemas were misformed. I just changed the arguments in the function | 
+| 2023/10/29 at 18:00 | Commentaries arise a lexical error message. | I forgot to recognized the new lines, I thought that it wasn't really important, but it is. |
+
 ## TODO ✅
 - [x] Lexer
 - [ ] Improve documentation
