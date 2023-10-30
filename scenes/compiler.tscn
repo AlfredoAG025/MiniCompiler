@@ -36,9 +36,6 @@ offset_bottom = -213.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 0
-text = "if (number > 0){
-# do something
-}"
 syntax_highlighter = ExtResource("1_tdhs6")
 minimap_draw = true
 symbol_lookup_on_click = true
@@ -123,6 +120,7 @@ initial_position = 1
 size = Vector2i(200, 100)
 dialog_text = "File Saved!"
 
+[connection signal="text_changed" from="Panel/CodeEdit" to="Lexer" method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="Panel/Lexer" to="Lexer" method="_on_lexer_pressed"]
 [connection signal="id_pressed" from="Panel/MenuBar/File" to="." method="_on_file_id_pressed"]
 [connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]
