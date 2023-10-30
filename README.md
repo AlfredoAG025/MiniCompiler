@@ -159,20 +159,38 @@ stateDiagram-v2
 
 ##### Make a program
 ```
-<program> ::= <statement>+
+program ::= statement+
 ```
 
 ##### Make a statement
 ```
-<statement> ::= <datatype> <identifier> "=" (<expression>|<string>)<semicolon>
-<identifier> ::= <letter>|<special><idrest>*
-<idrest> ::= <letter>|<special>|<digit>
-<letter> ::= "a"|"b"|...|"z"|"A"|"B"|...|"Z"
-<digit> ::= "0"|"1"|...|"9"
-<special> ::= "_"|"$"
-<datatype> ::= "int"|"double"|"string"
-<semicolon> ::= ";"
+statement ::= assignement| ifstatement | whilestatement | forstatement | output | input
+assignement ::= datatype identifier "=" expression ";"
+identifier ::= letter|special idrest*
+idrest ::= letter|special|digit
+output ::= "print" "''text''" 
+input ::= "read" identifier
+text ::= letter*
+letter ::= "a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|"l"|"m"|"n"|"o"|"p"|"q"|"r"|"s"|"t"|"u"|"v"|"w"|"u"|"v"|"w"|"x"|"y"|"z"
+|"A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"L"|"M"|"N"|"O"|"P"|"Q"|"R"|"S"|"T"|"U"|"V"|"W"|"X"|"Y"|"Z"
+digit ::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"
+special ::= "_"|"$"
+datatype ::= "int"|"double"|"chars"
+ifstatement::= "if" condition codeblock
+whilestatement ::= "while" condition codeblock
+forstatement ::= "for" "(" assignement expression";" expression  ")" codeblock
+codeblock ::= "{" statement+ "}"
+condition ::= "("  expression  ")"
+expression ::= term ( "+" | "-" term)*
+term ::= unary ( "/" | "*" | "<" | ">" | "<=" | ">=" | "==" | "!=" unary)*
+unary ::= ("+" | "-")* primary
+primary ::= digit | identifier | text
 ```
+#### Syntax Diagrams
+I use the next web app for making the diagrams: [https://dundalek.com/grammkit/](https://dundalek.com/grammkit/)
+
+![Syntax Diagrams](/graphics/images/syntax-grammar.png)
+
 
 #### Syntax Tree
 
