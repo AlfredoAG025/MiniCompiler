@@ -87,13 +87,13 @@ func get_token():
 		'/':
 			token = Token.new(self.current_character, TokenType.token_types.SLASH)
 		'(':
-			token = Token.new(self.current_character, TokenType.token_types.PARL)
+			token = Token.new(self.current_character, TokenType.token_types.LPAR)
 		')':
-			token = Token.new(self.current_character, TokenType.token_types.PARR)
+			token = Token.new(self.current_character, TokenType.token_types.RPAR)
 		'{':
-			token = Token.new(self.current_character, TokenType.token_types.BRAL)
+			token = Token.new(self.current_character, TokenType.token_types.LCBRA)
 		'}':
-			token = Token.new(self.current_character, TokenType.token_types.BRAR)
+			token = Token.new(self.current_character, TokenType.token_types.RCBRA)
 		'@EOF':
 			token = Token.new(self.current_character, TokenType.token_types.EOF)
 		'=':
@@ -180,5 +180,5 @@ func _on_lexer_pressed():
 
 
 func _on_code_edit_text_changed():
-	#lexer()
+	lexer()
 	pass
