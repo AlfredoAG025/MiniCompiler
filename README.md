@@ -164,6 +164,31 @@ stateDiagram-v2
     q3 --> [*]: Final State
 ```
 
+##### true
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> q0: Initial State
+    q0 --> q1: t
+    q1 --> q2: r
+    q2 --> q3: u
+    q3 --> q4: e
+    q4 --> [*]: Final State
+```
+
+##### false
+```mermaid
+stateDiagram-v2
+    direction LR
+    [*] --> q0: Initial State
+    q0 --> q1: f
+    q1 --> q2: a
+    q2 --> q3: l
+    q3 --> q4: s
+    q4 --> q5: e
+    q5 --> [*]: Final State
+```
+
 ### Token Types
 
 | Number | Token Type | Description | Lexeme(s) |
