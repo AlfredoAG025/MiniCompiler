@@ -16,7 +16,7 @@ This language supports:
 
 ### The alphabet 🔤
 
-**∑ = {a, b, c,…,z, A, B, C, …, 0, 1, 2, …, 9, ;, =, +, -, /, *, (, ), <, >, !, #}**
+**∑ = {a, b, c,…,z, A, B, C, …, 0, 1, 2, …, 9, ;, =, +, -, /, *, (, ), <, >, !, ", #}**
 
 ### Keywords 🔑
 | Keyword | Description |
