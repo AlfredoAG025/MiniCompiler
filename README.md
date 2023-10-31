@@ -225,7 +225,7 @@ stateDiagram-v2
 | 208 | LT | Less Than | < |
 | 209 | LTEQ | Less Than Equal | <= |
 | 210 | GT | Greater Than | > |
-| 211 | GT | Greater Than Equal | >= |
+| 211 | GTEQ | Greater Than Equal | >= |
 | 212 | LCBRA | Left Curly Bracket | { |
 | 213 | RCBRA  | Right Curly Bracket | } |
 | 214 | LPAR  | Left Parentesis | ( |
