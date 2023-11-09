@@ -1,0 +1,188 @@
+[gd_scene load_steps=7 format=3 uid="uid://dyf6xfhwwl06u"]
+
+[ext_resource type="Script" path="res://scripts/Lexer.gd" id="1_66s6a"]
+[ext_resource type="Script" path="res://scripts/UI.gd" id="1_l4mfc"]
+[ext_resource type="CodeHighlighter" uid="uid://dprdmkadh8tws" path="res://resources/CodeHighlighter.tres" id="1_tdhs6"]
+[ext_resource type="Texture2D" uid="uid://bcvdad3l4se5w" path="res://graphics/icons/open_file.png" id="3_kjvx3"]
+[ext_resource type="Texture2D" uid="uid://rvn2f1ftocix" path="res://graphics/icons/save_file.png" id="4_jiu0v"]
+[ext_resource type="Script" path="res://scripts/Parser.gd" id="6_770vs"]
+
+[node name="UI" type="Control"]
+process_mode = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l4mfc")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="Editor" type="CodeEdit" parent="Panel"]
+layout_mode = 2
+offset_left = 9.0
+offset_top = 93.0
+offset_right = 588.0
+offset_bottom = 425.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+syntax_highlighter = ExtResource("1_tdhs6")
+minimap_draw = true
+caret_blink = true
+symbol_lookup_on_click = true
+line_folding = true
+gutters_draw_executing_lines = true
+gutters_draw_line_numbers = true
+gutters_zero_pad_line_numbers = true
+gutters_draw_fold_gutter = true
+indent_use_spaces = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+
+[node name="StatusBox" type="TextEdit" parent="Panel"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -202.0
+offset_right = -13.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 12
+placeholder_text = "Terminal"
+caret_blink = true
+
+[node name="MenuBar" type="MenuBar" parent="Panel"]
+layout_mode = 1
+offset_right = 83.0
+offset_bottom = 31.0
+flat = true
+
+[node name="File" type="PopupMenu" parent="Panel/MenuBar"]
+title = "File"
+size = Vector2i(209, 100)
+item_count = 3
+item_0/text = "Open File...     Ctrl+O"
+item_0/icon = ExtResource("3_kjvx3")
+item_0/id = 0
+item_1/text = ""
+item_1/id = 2
+item_1/separator = true
+item_2/text = "Save file"
+item_2/icon = ExtResource("4_jiu0v")
+item_2/id = 1
+
+[node name="Help" type="PopupMenu" parent="Panel/MenuBar"]
+title = "Help"
+item_count = 4
+item_0/text = "Lexer Documentation"
+item_0/id = 0
+item_1/text = "Parser Documentation"
+item_1/id = 1
+item_2/text = "Semanthic Documentation"
+item_2/id = 2
+item_3/text = ""
+item_3/id = 3
+item_3/separator = true
+
+[node name="ActionsBar" type="HBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -103.5
+offset_right = 103.5
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Lexer" type="Button" parent="Panel/ActionsBar"]
+layout_mode = 2
+text = "Lexer"
+flat = true
+
+[node name="Parser" type="Button" parent="Panel/ActionsBar"]
+layout_mode = 2
+text = "Parser"
+flat = true
+
+[node name="Semanthic" type="Button" parent="Panel/ActionsBar"]
+layout_mode = 2
+text = "Semanthic"
+flat = true
+
+[node name="TabBar" type="TabBar" parent="Panel"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1138.0
+offset_top = 61.0
+offset_right = -1048.0
+offset_bottom = 92.0
+grow_horizontal = 0
+tab_count = 1
+tab_0/title = "filename"
+
+[node name="SymbolTable" type="RichTextLabel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -434.0
+offset_top = -234.0
+offset_right = -21.0
+offset_bottom = 100.0
+grow_horizontal = 0
+grow_vertical = 2
+bbcode_enabled = true
+text = "[table={3}]{cells}[/table]"
+scroll_following = true
+autowrap_mode = 0
+
+[node name="Lexer" type="Node" parent="."]
+script = ExtResource("1_66s6a")
+
+[node name="Parser" type="Node" parent="."]
+script = ExtResource("6_770vs")
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Open a File"
+initial_position = 1
+size = Vector2i(640, 480)
+ok_button_text = "Abrir"
+file_mode = 0
+filters = PackedStringArray("*.txt")
+
+[node name="AcceptDialog" type="AcceptDialog" parent="."]
+initial_position = 1
+size = Vector2i(200, 100)
+dialog_text = "File Saved!"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 830.0
+offset_top = 43.0
+offset_right = 934.0
+offset_bottom = 69.0
+text = "Symbol Table"
+
+[connection signal="text_changed" from="Panel/Editor" to="Lexer" method="_on_code_edit_text_changed"]
+[connection signal="id_pressed" from="Panel/MenuBar/File" to="." method="_on_file_id_pressed"]
+[connection signal="id_pressed" from="Panel/MenuBar/Help" to="." method="_on_help_id_pressed"]
+[connection signal="pressed" from="Panel/ActionsBar/Lexer" to="Lexer" method="_on_lexer_pressed"]
+[connection signal="pressed" from="Panel/ActionsBar/Parser" to="Parser" method="_on_parser_pressed"]
+[connection signal="file_selected" from="FileDialog" to="." method="_on_file_dialog_file_selected"]

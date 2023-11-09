@@ -2,12 +2,19 @@ extends Node
 
 class_name Lexer
 
-@onready var code_edit = $"../Panel/CodeEdit"
-@onready var terminal = $"../Panel/TextEdit"
+@onready var code_edit = $"../Panel/Editor"
+@onready var status_box = $"../Panel/StatusBox"
+@onready var symbol_table = $"../Panel/SymbolTable"
+
 
 var source : String
 var current_character : String
 var current_position : int
+
+var row = 1
+var col = 1
+
+var cells : String
 
 func _ready():
 	lexer()
@@ -15,16 +22,16 @@ func _ready():
 
 # make tokens
 func lexer():
-	terminal.text = ""
+	cells = ""
+	symbol_table.text = "[table={4}][cell border=#fff]Token Type[/cell][cell border=#fff]Lexeme[/cell][cell border=#fff]Line[/cell][cell border=#fff]Column[/cell]" + cells + "[/table]"
 	init(code_edit.text)
 	
 	var token : Token = self.get_token()
 	if token !=null:
 		while token.kind != TokenType.token_types.EOF:
-			terminal.text += str(token)
-			terminal.text += '\n'
+			cells += "[cell border=#fff]" + TokenType.token_types.find_key(token.kind) + "[/cell]" + "[cell border=#fff]" + token.text + "[/cell]" + "[cell border=#fff]" + str(token.position.x) + "[/cell]" + "[cell border=#fff]" + str(token.position.y) + "[/cell]"
+			symbol_table.text = "[table={4}][cell border=#fff]Token Type[/cell][cell border=#fff]Lexeme[/cell][cell border=#fff]Line[/cell][cell border=#fff]Column[/cell]" + cells + "[/table]"
 			token = self.get_token()
-			
 			if token == null:
 				break;
 	else:
@@ -53,7 +60,8 @@ func peek():
 
 # If token is not recognitze, send error message
 func abort(message):
-	terminal.text += "Lexing error " + message
+	error_string(FAILED)
+	status_box.text = "Lexing error: " + message
 
 # Handle white spaces
 func skip_white_space():
@@ -130,7 +138,7 @@ func get_token():
 			var startPos = self.current_position
 			
 			while self.current_character != '\"':
-				if self.current_character == '\r' or self.current_character == '\n' or self.current_character == '\t' or self.current_character == '\\' or self.current_character == '%':
+				if self.current_character == '@EOF' or self.current_character == '\r' or self.current_character == '\n' or self.current_character == '\t' or self.current_character == '\\' or self.current_character == '%':
 					self.abort("Illegal character in string.")
 					break;
 				self.nextChar()
@@ -146,7 +154,7 @@ func get_token():
 					
 					# Must have at least one digit after decimal
 					if not self.peek().is_valid_int():
-						self.abort("Illegal character in double.")
+						self.abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR_DOUBLE))
 					while self.peek().is_valid_int():
 						self.nextChar()
 					var tokenText = self.source.substr(startPos, current_position - startPos + 1)
@@ -168,17 +176,19 @@ func get_token():
 					token = Token.new(tokenText, TokenType.token_types[keyword])
 			else:
 				# Unknown token!
-				abort(self.current_character)
+				abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR) + ': "' +self.current_character + '"')
 	if token != null:
-		token.position = current_position
+		col = current_position + 1
+		token.position = Vector2i(row, col)
 	self.nextChar()
 	return token
 
 func _on_lexer_pressed():
+	status_box.text = "Lexer Phase..."
 	lexer()
 
 
 
 func _on_code_edit_text_changed():
+	status_box.text = "Lexer Phase..."
 	lexer()
-	pass

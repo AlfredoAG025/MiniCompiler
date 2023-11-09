@@ -4,14 +4,17 @@ class_name Token
 
 var text : String
 var kind : int
-var position : int
+var position : Vector2i
+
+func _ready():
+	pass
 
 func _init(tokenText, tokenKind):
 	text = tokenText
 	kind = tokenKind
 
 func _to_string():
-	return "lexeme: %s, type: %s, position: %d" % [text, TokenType.token_types.find_key(kind), position]
+	return "lexeme: %s, type: %s, position: %d, %d" % [text, TokenType.token_types.find_key(kind), position.x, position.y]
 
 static func is_valid_keyword(tokenText : String):
 	for token_kind in TokenType.token_types:

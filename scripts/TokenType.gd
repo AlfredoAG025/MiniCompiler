@@ -11,4 +11,5 @@ enum token_types {EOF = -1, NL = 0, IDENTIFIER = 1, INTEGER = 2, DECIMAL = 3, ST
 , GT = 210, GTEQ = 211, LCBRA = 212, RCBRA = 213, LPAR = 214, RPAR = 215
 }
 
-
+static func type_to_string(kind: int) -> String:
+	return token_types.find_key(kind)

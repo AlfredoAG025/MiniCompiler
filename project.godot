@@ -11,13 +11,9 @@ config_version=5
 [application]
 
 config/name="MiniCompiler"
-run/main_scene="res://scenes/compiler.tscn"
+run/main_scene="res://scenes/UI.tscn"
 config/features=PackedStringArray("4.1", "GL Compatibility")
 config/icon="res://icon.svg"
-
-[display]
-
-window/stretch/mode="canvas_items"
 
 [rendering]
 
