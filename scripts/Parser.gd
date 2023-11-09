@@ -2,11 +2,8 @@ extends Node
 
 @onready var lexer : Lexer = $"../Lexer" 
 @onready var status_box = $"../Panel/StatusBox"
-@onready var editor = $"../Panel/Editor"
+@onready var editor = $"../Panel/CodeEdit"
 @onready var parserbtn = $"../Panel/ActionsBar/Parser"
-
-
-
 
 var curToken : Token
 var peekToken : Token
@@ -68,6 +65,17 @@ func statement():
 		nextToken()
 		condition()
 		codeblock()
+		nextToken()
+		while checkToken(TokenType.token_types.ELIF):
+			status_box.text += '\nSTATEMENT-ELIF'
+			nextToken()
+			condition()
+			codeblock()
+			nextToken()
+		if checkToken(TokenType.token_types.ELSE):
+			status_box.text += '\nSTATEMENT-ELSE'
+			nextToken()
+			codeblock()
 	else:
 		nextToken()
 
@@ -96,7 +104,8 @@ func codeblock():
 		# ZERO OR MORE STATEMENTS IN THE BODY
 		while not checkToken(TokenType.token_types.RCBRA):
 			statement()
-			if checkToken(TokenType.token_types.EOF):
+			# VERIFICAR POR }
+			if checkToken(TokenType.token_types.EOF) or checkToken(TokenType.token_types.IF) or checkToken(TokenType.token_types.ELIF) or checkToken(TokenType.token_types.ELSE) or checkToken(TokenType.token_types.LCBRA):
 				abort("Expected } at " + str(curToken))
 				break
 	else:

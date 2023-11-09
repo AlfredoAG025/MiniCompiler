@@ -1,9 +1,20 @@
 print "Hello World!";
 
 if ( 5 == 5 ){
-    print "5 is equal to 5"; # This is a print statement
-    print "Another print"; # Another print
-    # This is ignored
+	print "5 is equal to 5"; # This is a print statement
+	print "Another print"; # Another print
+	# This is ignored
+}
+elif ( 5 != 5 ){
+    print "5 is NOT equal to 5"; # This is a print statement
+	print "Another print"; # Another print
+	# This is ignored
+}
+elif ( 4 != 5 ){
+    int c = 3;
+}
+else {
+    print "ASDW";
 }
 
 int a = 2;

@@ -1,7 +1,7 @@
 extends Control
 
 @onready var file_dialog = $FileDialog
-@onready var code_edit = $Panel/Editor
+@onready var code_edit = $Panel/CodeEdit
 @onready var accept_dialog = $AcceptDialog
 @onready var tab_bar = $Panel/TabBar
 

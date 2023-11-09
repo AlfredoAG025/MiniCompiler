@@ -2,7 +2,7 @@ extends Node
 
 class_name Lexer
 
-@onready var code_edit = $"../Panel/Editor"
+@onready var code_edit = $"../Panel/CodeEdit"
 @onready var status_box = $"../Panel/StatusBox"
 @onready var symbol_table = $"../Panel/SymbolTable"
 
