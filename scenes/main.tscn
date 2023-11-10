@@ -1,0 +1,329 @@
+[gd_scene load_steps=14 format=3 uid="uid://ctaj2rgpaqti4"]
+
+[ext_resource type="Script" path="res://scripts/ide/main.gd" id="1_6fwd0"]
+[ext_resource type="Theme" uid="uid://cp8x7xc1gv58k" path="res://resources/main_theme.tres" id="2_bph6x"]
+[ext_resource type="Texture2D" uid="uid://cyc4wch4drr77" path="res://assets/icons/code_icon.png" id="3_8nii8"]
+[ext_resource type="PackedScene" uid="uid://dcdvifunladuj" path="res://scenes/file_dialog.tscn" id="3_pde2l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f3wom"]
+bg_color = Color(0.129412, 0.145098, 0.168627, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sm2uu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1paim"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_oqnp7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r743l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sibe0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7way"]
+bg_color = Color(0.156863, 0.172549, 0.203922, 1)
+
+[sub_resource type="CodeHighlighter" id="CodeHighlighter_bgjsi"]
+number_color = Color(0.780392, 0.603922, 0.4, 1)
+symbol_color = Color(0.670588, 0.698039, 0.74902, 1)
+function_color = Color(0.309804, 0.686275, 0.890196, 1)
+member_variable_color = Color(0.937255, 0.27451, 0.278431, 1)
+keyword_colors = {
+"chars": Color(0.792157, 0.372549, 0.741176, 1),
+"double": Color(0.792157, 0.372549, 0.741176, 1),
+"elif": Color(0.792157, 0.372549, 0.741176, 1),
+"else": Color(0.792157, 0.372549, 0.741176, 1),
+"for": Color(0.792157, 0.372549, 0.741176, 1),
+"if": Color(0.792157, 0.372549, 0.741176, 1),
+"int": Color(0.792157, 0.372549, 0.741176, 1),
+"while": Color(0.792157, 0.372549, 0.741176, 1)
+}
+color_regions = {
+"\" \"": Color(0.439216, 0.792157, 0.427451, 1),
+"#": Color(0.498039, 0.517647, 0.556863, 1)
+}
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_7e3kq"]
+color = Color(0.560955, 0.560955, 0.560955, 1)
+thickness = 3
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6fwd0")
+
+[node name="bg" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.156863, 0.172549, 0.203922, 1)
+
+[node name="explorer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_top = 45.0
+offset_right = 239.0
+grow_vertical = 2
+
+[node name="panel" type="Panel" parent="explorer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_f3wom")
+
+[node name="MarginContainer" type="MarginContainer" parent="explorer/panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="explorer/panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="explorer/panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_bph6x")
+text = "EXPLORER"
+
+[node name="Tree" type="Tree" parent="explorer/panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_bph6x")
+
+[node name="icon" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 67.0
+offset_bottom = 45.0
+
+[node name="texture-icon" type="Button" parent="icon"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.5
+offset_top = -16.5
+offset_right = 89.5
+offset_bottom = 87.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+theme_override_styles/normal = SubResource("StyleBoxEmpty_sm2uu")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_1paim")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_oqnp7")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_r743l")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sibe0")
+icon = ExtResource("3_8nii8")
+flat = true
+
+[node name="sup_bar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 59.0
+offset_bottom = 45.0
+grow_horizontal = 2
+
+[node name="panel" type="Panel" parent="sup_bar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_r7way")
+
+[node name="MarginContainer" type="MarginContainer" parent="sup_bar/panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="sup_bar/panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="sup_bar/panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="filebtn" type="MenuButton" parent="sup_bar/panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_bph6x")
+text = "File
+"
+flat = false
+item_count = 3
+popup/item_0/text = "New Text File"
+popup/item_0/id = 0
+popup/item_1/text = ""
+popup/item_1/id = 1
+popup/item_1/separator = true
+popup/item_2/text = "Open File..."
+popup/item_2/id = 2
+
+[node name="helpbtn" type="MenuButton" parent="sup_bar/panel/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_bph6x")
+text = "Help
+"
+flat = false
+item_count = 5
+popup/item_0/text = "Lexer Docs"
+popup/item_0/id = 0
+popup/item_1/text = "Parser Docs"
+popup/item_1/id = 1
+popup/item_2/text = "Semanthic Docs"
+popup/item_2/id = 2
+popup/item_3/text = ""
+popup/item_3/id = 3
+popup/item_3/separator = true
+popup/item_4/text = "About"
+popup/item_4/id = 4
+
+[node name="editor" type="Control" parent="."]
+layout_mode = 2
+anchors_preset = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 244.0
+offset_top = 45.0
+offset_right = -6.0
+offset_bottom = -197.0
+
+[node name="code_edit" type="CodeEdit" parent="editor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_bph6x")
+text = "int a = 1;
+int b = 3;
+int c = a + b;
+# Comentary
+if (a < b){
+    print \"hello\";
+}
+"
+autowrap_mode = 2
+highlight_all_occurrences = true
+highlight_current_line = true
+syntax_highlighter = SubResource("CodeHighlighter_bgjsi")
+scroll_smooth = true
+minimap_draw = true
+minimap_width = 100
+caret_blink = true
+symbol_lookup_on_click = true
+line_folding = true
+gutters_draw_breakpoints_gutter = true
+gutters_draw_bookmarks = true
+gutters_draw_executing_lines = true
+gutters_draw_line_numbers = true
+gutters_zero_pad_line_numbers = true
+gutters_draw_fold_gutter = true
+indent_automatic = true
+auto_brace_completion_enabled = true
+auto_brace_completion_highlight_matching = true
+
+[node name="terminal" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 239.0
+offset_top = -199.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_bph6x")
+
+[node name="MarginContainer" type="MarginContainer" parent="terminal"]
+clip_contents = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_bph6x")
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="text_edit" type="TextEdit" parent="terminal/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.478431, 0.831373, 0.458824, 1)
+theme_override_styles/normal = SubResource("StyleBoxLine_7e3kq")
+placeholder_text = "equipolao@lao:~/home$"
+scroll_smooth = true
+
+[node name="actions" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 44.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="actions"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -103.5
+offset_top = -15.5
+offset_right = 103.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="lexerbtn" type="Button" parent="actions/HBoxContainer"]
+layout_mode = 2
+text = "Lexer"
+flat = true
+
+[node name="parserbtn" type="Button" parent="actions/HBoxContainer"]
+layout_mode = 2
+text = "Parser"
+flat = true
+
+[node name="semanthicbtn" type="Button" parent="actions/HBoxContainer"]
+layout_mode = 2
+text = "Semanthic"
+flat = true
+
+[node name="file_dialog" parent="." instance=ExtResource("3_pde2l")]
+visible = false
+
+[node name="Lexer" type="Node" parent="."]
+
+[node name="Parser" type="Node" parent="."]
+
+[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected"]

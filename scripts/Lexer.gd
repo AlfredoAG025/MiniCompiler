@@ -35,7 +35,7 @@ func lexer():
 			if token == null:
 				break;
 	else:
-		abort(current_character)
+		abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR) + ': "' + self.current_character + '" at ' + str(current_position))
 
 # get the first character
 func init(src : String):
@@ -139,7 +139,7 @@ func get_token():
 			
 			while self.current_character != '\"':
 				if self.current_character == '@EOF' or self.current_character == '\r' or self.current_character == '\n' or self.current_character == '\t' or self.current_character == '\\' or self.current_character == '%':
-					self.abort("Illegal character in string.")
+					self.abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR_CHARS) + ': "' + self.current_character + '" at ' + str(current_position))
 					break;
 				self.nextChar()
 			var tokenText = self.source.substr(startPos, self.current_position - startPos)
@@ -176,19 +176,19 @@ func get_token():
 					token = Token.new(tokenText, TokenType.token_types[keyword])
 			else:
 				# Unknown token!
-				abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR) + ': "' +self.current_character + '"')
+				abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR) + ': "' + self.current_character + '" at ' + str(current_position))
 	if token != null:
 		col = current_position + 1
 		token.position = Vector2i(row, col)
 	self.nextChar()
 	return token
 
+# Lexer btn pressed
 func _on_lexer_pressed():
 	status_box.text = "Lexer Phase..."
 	lexer()
 
-
-
+# Input on code editor
 func _on_code_edit_text_changed():
 	status_box.text = "Lexer Phase..."
 	lexer()

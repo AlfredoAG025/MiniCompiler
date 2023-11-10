@@ -77,7 +77,8 @@ func statement():
 			nextToken()
 			codeblock()
 	else:
-		nextToken()
+		# nextToken()
+		abort('That is not a statement at ' + str(curToken))
 
 func assignment():
 	nextToken()

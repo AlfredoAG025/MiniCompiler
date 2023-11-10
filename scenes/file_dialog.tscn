@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcdvifunladuj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxrak"]
+bg_color = Color(0.129412, 0.145098, 0.168627, 1)
+
+[sub_resource type="Theme" id="Theme_df1wv"]
+Tree/styles/panel = SubResource("StyleBoxFlat_dxrak")
+
+[node name="file_dialog" type="FileDialog"]
+title = "Open a File"
+initial_position = 2
+size = Vector2i(640, 480)
+visible = true
+theme = SubResource("Theme_df1wv")
+ok_button_text = "Abrir"
+file_mode = 0
+filters = PackedStringArray("*.txt")
