@@ -1,51 +1,54 @@
 extends Node
 
-class_name Lexer
+class_name Lexer_IDE
 
-@onready var code_edit = $"../Panel/CodeEdit"
-@onready var status_box = $"../Panel/StatusBox"
-@onready var symbol_table = $"../Panel/SymbolTable"
+@onready var code_edit = $"../editor/code_edit"
+@onready var status_terminal = $"../terminal/MarginContainer/status_terminal"
 
+
+var has_success = false
+var has_error = false
+
+var token_list = []
 
 var source : String
 var current_character : String
 var current_position : int
 
-var row = 1
-var col = 1
-
-var cells : String
+var row : int = 1
+var col : int = 1
 
 func _ready():
 	lexer()
-	pass
 
 # make tokens
 func lexer():
-	cells = ""
-	symbol_table.text = "[table={4}][cell border=#fff]Token Type[/cell][cell border=#fff]Lexeme[/cell][cell border=#fff]Line[/cell][cell border=#fff]Column[/cell]" + cells + "[/table]"
 	init(code_edit.text)
 	
-	var token : Token = self.get_token()
-	if token !=null:
-		while token.kind != TokenType.token_types.EOF:
-			cells += "[cell border=#fff]" + TokenType.token_types.find_key(token.kind) + "[/cell]" + "[cell border=#fff]" + token.text + "[/cell]" + "[cell border=#fff]" + str(token.position.x) + "[/cell]" + "[cell border=#fff]" + str(token.position.y) + "[/cell]"
-			symbol_table.text = "[table={4}][cell border=#fff]Token Type[/cell][cell border=#fff]Lexeme[/cell][cell border=#fff]Line[/cell][cell border=#fff]Column[/cell]" + cells + "[/table]"
-			token = self.get_token()
-			if token == null:
-				break;
-	else:
-		abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR) + ': "' + self.current_character + '" at ' + str(current_position))
+	var token : Token
+	
+	while self.current_character != '@EOF':
+		token = self.get_token()
+		if token == null:
+			break;
+		status_terminal.text += '\n' + str(token)
 
 # get the first character
 func init(src : String):
+	self.has_success = false
+	self.has_error = false
 	self.source = src
 	self.current_character = ''
 	self.current_position = -1
+	self.row = 1
+	self.col = 1
 	nextChar()
 
 # asking for the next character
 func nextChar():
+	if self.current_character == '\n':
+			self.row += 1
+			self.col = 0
 	self.current_position += 1
 	if self.current_position >= len(self.source):
 		self.current_character = '@EOF'
@@ -60,8 +63,8 @@ func peek():
 
 # If token is not recognitze, send error message
 func abort(message):
-	error_string(FAILED)
-	status_box.text = "Lexing error: " + message
+	has_error = true
+	status_terminal.text = "Lexing error: " + message
 
 # Handle white spaces
 func skip_white_space():
@@ -177,19 +180,21 @@ func get_token():
 			else:
 				# Unknown token!
 				abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR) + ': "' + self.current_character + '" at ' + str(current_position))
+				token = Token.new('?UNKNOWN?', TokenType.token_types.UNKNOW)
 	if token != null:
-		col = current_position + 1
-		token.position = Vector2i(row, col)
+		self.col =  (current_position + 1) / row
+		token.position = Vector2i(self.row, self.col)
 	self.nextChar()
 	return token
-
-# Lexer btn pressed
-func _on_lexer_pressed():
-	status_box.text = "Lexer Phase..."
-	lexer()
 
 # Input on code editor
 func _on_code_edit_text_changed():
 	#status_box.text = "Lexer Phase..."
 	#lexer()
 	pass
+
+# Lexer btn pressed
+func _on_lexerbtn_pressed():
+	status_terminal.text = "Lexer Phase..."
+	lexer()
+

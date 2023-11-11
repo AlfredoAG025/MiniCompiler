@@ -1,9 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://ctaj2rgpaqti4"]
+[gd_scene load_steps=22 format=3 uid="uid://ctaj2rgpaqti4"]
 
 [ext_resource type="Script" path="res://scripts/ide/main.gd" id="1_6fwd0"]
 [ext_resource type="Theme" uid="uid://cp8x7xc1gv58k" path="res://resources/main_theme.tres" id="2_bph6x"]
 [ext_resource type="Texture2D" uid="uid://cyc4wch4drr77" path="res://assets/icons/code_icon.png" id="3_8nii8"]
 [ext_resource type="PackedScene" uid="uid://dcdvifunladuj" path="res://scenes/file_dialog.tscn" id="3_pde2l"]
+[ext_resource type="Script" path="res://scripts/ide/Lexer.gd" id="5_jw17p"]
+[ext_resource type="Script" path="res://scripts/ide/Parser.gd" id="6_uey64"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f3wom"]
 bg_color = Color(0.129412, 0.145098, 0.168627, 1)
@@ -21,6 +23,19 @@ bg_color = Color(0.129412, 0.145098, 0.168627, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r7way"]
 bg_color = Color(0.156863, 0.172549, 0.203922, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sgxp3"]
+bg_color = Color(0.823529, 0.0156863, 0.176471, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qy6nq"]
+bg_color = Color(0.996078, 0.219608, 0.286275, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7gkbs"]
+bg_color = Color(0.509026, 0.00451231, 0.093299, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7hiao"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ynntv"]
+
 [sub_resource type="CodeHighlighter" id="CodeHighlighter_bgjsi"]
 number_color = Color(0.780392, 0.603922, 0.4, 1)
 symbol_color = Color(0.670588, 0.698039, 0.74902, 1)
@@ -34,6 +49,8 @@ keyword_colors = {
 "for": Color(0.792157, 0.372549, 0.741176, 1),
 "if": Color(0.792157, 0.372549, 0.741176, 1),
 "int": Color(0.792157, 0.372549, 0.741176, 1),
+"print": Color(0.792157, 0.372549, 0.741176, 1),
+"read": Color(0.792157, 0.372549, 0.741176, 1),
 "while": Color(0.792157, 0.372549, 0.741176, 1)
 }
 color_regions = {
@@ -41,9 +58,13 @@ color_regions = {
 "#": Color(0.498039, 0.517647, 0.556863, 1)
 }
 
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_7e3kq"]
-color = Color(0.560955, 0.560955, 0.560955, 1)
-thickness = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p6w13"]
+bg_color = Color(0.129412, 0.145098, 0.168627, 1)
+border_width_top = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u8wbg"]
+bg_color = Color(0.129412, 0.145098, 0.168627, 1)
+border_width_top = 3
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -101,6 +122,10 @@ size_flags_horizontal = 4
 theme = ExtResource("2_bph6x")
 text = "EXPLORER"
 
+[node name="current_file_lbl" type="Label" parent="explorer/panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Current File.."
+
 [node name="Tree" type="Tree" parent="explorer/panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("2_bph6x")
@@ -137,7 +162,7 @@ layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_left = 59.0
-offset_bottom = 45.0
+offset_bottom = 43.0
 grow_horizontal = 2
 
 [node name="panel" type="Panel" parent="sup_bar"]
@@ -145,6 +170,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -706.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_r7way")
@@ -173,7 +199,7 @@ theme = ExtResource("2_bph6x")
 text = "File
 "
 flat = false
-item_count = 3
+item_count = 4
 popup/item_0/text = "New Text File"
 popup/item_0/id = 0
 popup/item_1/text = ""
@@ -181,6 +207,8 @@ popup/item_1/id = 1
 popup/item_1/separator = true
 popup/item_2/text = "Open File..."
 popup/item_2/id = 2
+popup/item_3/text = "Save File As"
+popup/item_3/id = 3
 
 [node name="helpbtn" type="MenuButton" parent="sup_bar/panel/MarginContainer/HBoxContainer"]
 layout_mode = 2
@@ -201,6 +229,43 @@ popup/item_3/separator = true
 popup/item_4/text = "About"
 popup/item_4/id = 4
 
+[node name="window_btns" type="Panel" parent="sup_bar"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -265.0
+offset_bottom = 44.0
+grow_horizontal = 0
+theme = ExtResource("2_bph6x")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="sup_bar/window_btns"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="sup_bar/window_btns/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button3" type="Button" parent="sup_bar/window_btns/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="quitbtn" type="Button" parent="sup_bar/window_btns/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_sgxp3")
+theme_override_styles/hover = SubResource("StyleBoxFlat_qy6nq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_7gkbs")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7hiao")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ynntv")
+text = "X"
+
 [node name="editor" type="Control" parent="."]
 layout_mode = 2
 anchors_preset = 0
@@ -208,7 +273,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 244.0
 offset_top = 45.0
-offset_right = -6.0
+offset_right = -2.0
 offset_bottom = -197.0
 
 [node name="code_edit" type="CodeEdit" parent="editor"]
@@ -219,14 +284,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_bph6x")
-text = "int a = 1;
-int b = 3;
-int c = a + b;
-# Comentary
-if (a < b){
-    print \"hello\";
-}
-"
+placeholder_text = "Open a file or start coding :)"
 autowrap_mode = 2
 highlight_all_occurrences = true
 highlight_current_line = true
@@ -273,11 +331,13 @@ theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
-[node name="text_edit" type="TextEdit" parent="terminal/MarginContainer"]
+[node name="status_terminal" type="TextEdit" parent="terminal/MarginContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.478431, 0.831373, 0.458824, 1)
-theme_override_styles/normal = SubResource("StyleBoxLine_7e3kq")
+theme_override_styles/focus = SubResource("StyleBoxFlat_p6w13")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_u8wbg")
 placeholder_text = "equipolao@lao:~/home$"
+editable = false
 scroll_smooth = true
 
 [node name="actions" type="Control" parent="."]
@@ -306,6 +366,7 @@ grow_vertical = 2
 
 [node name="lexerbtn" type="Button" parent="actions/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_bph6x")
 text = "Lexer"
 flat = true
 
@@ -316,14 +377,30 @@ flat = true
 
 [node name="semanthicbtn" type="Button" parent="actions/HBoxContainer"]
 layout_mode = 2
+disabled = true
 text = "Semanthic"
 flat = true
 
-[node name="file_dialog" parent="." instance=ExtResource("3_pde2l")]
+[node name="open_file_dialog" parent="." instance=ExtResource("3_pde2l")]
 visible = false
+filters = PackedStringArray("*.lao")
+
+[node name="save_file_dialog" parent="." instance=ExtResource("3_pde2l")]
+title = "Save a File"
+visible = false
+ok_button_text = "Guardar"
+file_mode = 4
+filters = PackedStringArray("*.lao")
 
 [node name="Lexer" type="Node" parent="."]
+script = ExtResource("5_jw17p")
 
 [node name="Parser" type="Node" parent="."]
+script = ExtResource("6_uey64")
 
-[connection signal="file_selected" from="file_dialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="pressed" from="sup_bar/window_btns/HBoxContainer/quitbtn" to="." method="_on_quitbtn_pressed"]
+[connection signal="text_changed" from="editor/code_edit" to="Lexer" method="_on_code_edit_text_changed"]
+[connection signal="pressed" from="actions/HBoxContainer/lexerbtn" to="Lexer" method="_on_lexerbtn_pressed"]
+[connection signal="pressed" from="actions/HBoxContainer/parserbtn" to="Parser" method="_on_parserbtn_pressed"]
+[connection signal="file_selected" from="open_file_dialog" to="." method="_on_file_dialog_file_selected"]
+[connection signal="file_selected" from="save_file_dialog" to="." method="_on_save_file_dialog_file_selected"]

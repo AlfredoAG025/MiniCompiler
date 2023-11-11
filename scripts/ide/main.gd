@@ -1,12 +1,12 @@
 extends Control
 
-@onready var file_dialog = $file_dialog
+@onready var open_file_dialog = $open_file_dialog
+@onready var save_file_dialog = $save_file_dialog
+@onready var current_file_lbl = $explorer/panel/MarginContainer/VBoxContainer/current_file_lbl
 
 @onready var helpbtn = $sup_bar/panel/MarginContainer/HBoxContainer/helpbtn
 @onready var filebtn = $sup_bar/panel/MarginContainer/HBoxContainer/filebtn
 @onready var code_edit = $editor/code_edit
-
-
 
 var help_popup : PopupMenu
 var file_popup : PopupMenu
@@ -39,7 +39,9 @@ func _on_help_item_pressed(id):
 func _on_file_item_pressed(id):
 	match id:
 		2:
-			file_dialog.show()
+			open_file_dialog.show()
+		3:
+			save_file_dialog.show()
 
 # Load File
 func _on_file_dialog_file_selected(path):
@@ -47,3 +49,22 @@ func _on_file_dialog_file_selected(path):
 	var content = file.get_as_text()
 	code_edit.text = content
 	file.close()
+	current_file_lbl.text = path.get_file()
+
+func _on_save_file_dialog_file_selected(path):
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	var content = code_edit.text
+	if file.is_open():
+		file.store_string(content)
+		file.close()
+	file = FileAccess.open(path, FileAccess.READ)
+	content = file.get_as_text()
+	code_edit.text = content
+	file.close()
+	current_file_lbl.text = path.get_file()
+
+
+func _on_quitbtn_pressed():
+	await get_tree().create_timer(0.3).timeout
+	get_tree().quit()
+
