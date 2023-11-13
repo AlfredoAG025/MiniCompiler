@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/ide/main.gd" id="1_6fwd0"]
 [ext_resource type="Theme" uid="uid://cp8x7xc1gv58k" path="res://resources/main_theme.tres" id="2_bph6x"]
 [ext_resource type="Texture2D" uid="uid://cyc4wch4drr77" path="res://assets/icons/code_icon.png" id="3_8nii8"]
-[ext_resource type="PackedScene" uid="uid://dcdvifunladuj" path="res://scenes/file_dialog.tscn" id="3_pde2l"]
+[ext_resource type="PackedScene" path="res://scenes/file_dialog.tscn" id="3_pde2l"]
 [ext_resource type="Script" path="res://scripts/ide/Lexer.gd" id="5_jw17p"]
 [ext_resource type="Script" path="res://scripts/ide/Parser.gd" id="6_uey64"]
 
