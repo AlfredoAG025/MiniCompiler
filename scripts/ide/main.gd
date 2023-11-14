@@ -1,8 +1,12 @@
 extends Control
 
+@onready var about_dialog = $about_dialog
 @onready var open_file_dialog = $open_file_dialog
 @onready var save_file_dialog = $save_file_dialog
+@onready var symbol_table_dialog = $symbol_table_dialog
 @onready var current_file_lbl = $explorer/panel/MarginContainer/VBoxContainer/current_file_lbl
+
+
 
 @onready var helpbtn = $sup_bar/panel/MarginContainer/HBoxContainer/helpbtn
 @onready var filebtn = $sup_bar/panel/MarginContainer/HBoxContainer/filebtn
@@ -34,6 +38,8 @@ func _on_help_item_pressed(id):
 			OS.shell_open(parser_docs_path)
 		2:
 			OS.shell_open(semanthic_docs_path)
+		4:
+			about_dialog.show()
 
 # File Options
 func _on_file_item_pressed(id):
@@ -50,6 +56,8 @@ func _on_file_dialog_file_selected(path):
 	code_edit.text = content
 	file.close()
 	current_file_lbl.text = path.get_file()
+	$actions/HBoxContainer/parserbtn.disabled = true
+	$actions/HBoxContainer/semanthicbtn.disabled = true
 
 func _on_save_file_dialog_file_selected(path):
 	var file = FileAccess.open(path, FileAccess.WRITE)
@@ -63,8 +71,15 @@ func _on_save_file_dialog_file_selected(path):
 	file.close()
 	current_file_lbl.text = path.get_file()
 
-
 func _on_quitbtn_pressed():
 	await get_tree().create_timer(0.3).timeout
 	get_tree().quit()
 
+
+func _on_tbl_symbol_btn_pressed():
+	symbol_table_dialog.show()
+
+
+func _on_code_edit_text_changed():
+	$actions/HBoxContainer/parserbtn.disabled = true
+	$actions/HBoxContainer/semanthicbtn.disabled = true

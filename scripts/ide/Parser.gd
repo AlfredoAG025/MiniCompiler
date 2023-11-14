@@ -6,6 +6,10 @@ class_name Parser_IDE
 @onready var status_terminal = $"../terminal/MarginContainer/status_terminal"
 @onready var code_edit = $"../editor/code_edit"
 
+@onready var red = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/red"
+@onready var yellow = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/yellow"
+@onready var green = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/green"
+
 var curToken : Token
 var peekToken : Token
 
@@ -20,17 +24,40 @@ func parser(lexer_var):
 	has_error = false
 	lexer_var.init(code_edit.text)
 	
+	
+	red.color.a = 0.31
+	yellow.color.a = 0.31
+	green.color.a = 0.31
+	
+	red.color.a = 1
+	print("Get Ready!")
+	await get_tree().create_timer(0.5).timeout
+	
+	red.color.a = 0.31
+	yellow.color.a = 1
+	print("Making Parser")
+	await get_tree().create_timer(0.5).timeout
+	
 	#Initialize the cur and peek tokens
 	nextToken()
 	nextToken()
 	
 	status_terminal.text = "Parsing..."
 	program()
-	if not has_error:
+	if !has_error:
 		status_terminal.text += "\nParsing Completed"
+		yellow.color.a = 0.31
+		green.color.a = 1
+		print("Lexer Completed")
+		$"../actions/HBoxContainer/semanthicbtn".disabled = false
+	else:
+		yellow.color.a = 0.31
+		red.color.a = 1
+		print("Lexer ERROR")
+		await get_tree().create_timer(0.5).timeout
 
 func program():
-	status_terminal.text += '\nPROGRAM'
+	#status_terminal.text += '\nPROGRAM'
 	
 	# Parse all the statements in the program.
 	while not checkToken(TokenType.token_types.EOF):
@@ -42,7 +69,7 @@ func statement():
 	# print(str(curToken))
 	if not has_error:
 		if checkToken(TokenType.token_types.PRINT):
-			status_terminal.text += '\nSTATEMENT-PRINT'
+			#status_terminal.text += '\nSTATEMENT-PRINT'
 			nextToken()
 			if checkToken(TokenType.token_types.STRING) or checkToken(TokenType.token_types.IDENTIFIER):
 				nextToken()
@@ -50,13 +77,13 @@ func statement():
 			else:
 				abort('Expected a String or Identifier at ' + str(curToken))
 		elif checkToken(TokenType.token_types.READ):
-			status_terminal.text += '\nSTATEMENT-READ'
+			#status_terminal.text += '\nSTATEMENT-READ'
 			nextToken()
 			if to_match(TokenType.token_types.IDENTIFIER):
 				nextToken()
 				semicolon()
 		elif checkToken(TokenType.token_types.INT) or checkToken(TokenType.token_types.DOUBLE) or checkToken(TokenType.token_types.CHARS):
-			status_terminal.text += '\nSTATEMENT-ASSIGNEMENT'
+			#status_terminal.text += '\nSTATEMENT-ASSIGNEMENT'
 			nextToken()
 			if to_match(TokenType.token_types.IDENTIFIER):
 				nextToken()
@@ -65,26 +92,28 @@ func statement():
 					expression()
 					semicolon()
 		elif checkToken(TokenType.token_types.IF):
-			status_terminal.text += '\nSTATEMENT-IF'
+			#status_terminal.text += '\nSTATEMENT-IF'
 			nextToken()
 			condition()
 			code_block()
 			nextToken()
-			while checkToken(TokenType.token_types.ELIF) and not has_error:
-				status_terminal.text += '\nSTATEMENT-ELIF'
+			while (checkToken(TokenType.token_types.ELIF)) and not has_error :
+				#status_terminal.text += '\nSTATEMENT-ELIF'
 				nextToken()
 				condition()
 				code_block()
 				nextToken()
+				
+				
 			if checkToken(TokenType.token_types.ELSE):
-				status_terminal.text += '\nSTATEMENT-ELSE'
+				#status_terminal.text += '\nSTATEMENT-ELSE'
 				nextToken()
 				code_block()
 				nextToken()
 		elif checkToken(TokenType.token_types.NL):
 			nextToken()
 		elif checkToken(TokenType.token_types.WHILE):
-			status_terminal.text += '\nSTATEMENT-WHILE'
+			#status_terminal.text += '\nSTATEMENT-WHILE'
 			nextToken()
 			condition()
 			code_block()
@@ -94,7 +123,7 @@ func statement():
 
 # expression ::= term {( "-" | "+" ) term}
 func expression():
-	status_terminal.text += '\nEXPRESSION'
+	#status_terminal.text += '\nEXPRESSION'
 	term()
 	# Can have 0 or more +/- and expressions.
 	while checkToken(TokenType.token_types.PLUS) or checkToken(TokenType.token_types.MINUS):

@@ -1,10 +1,11 @@
-[gd_scene load_steps=22 format=3 uid="uid://ctaj2rgpaqti4"]
+[gd_scene load_steps=23 format=3 uid="uid://ctaj2rgpaqti4"]
 
 [ext_resource type="Script" path="res://scripts/ide/main.gd" id="1_6fwd0"]
 [ext_resource type="Theme" uid="uid://cp8x7xc1gv58k" path="res://resources/main_theme.tres" id="2_bph6x"]
 [ext_resource type="Texture2D" uid="uid://cyc4wch4drr77" path="res://assets/icons/code_icon.png" id="3_8nii8"]
-[ext_resource type="PackedScene" path="res://scenes/file_dialog.tscn" id="3_pde2l"]
+[ext_resource type="PackedScene" uid="uid://dcdvifunladuj" path="res://scenes/file_dialog.tscn" id="3_pde2l"]
 [ext_resource type="Script" path="res://scripts/ide/Lexer.gd" id="5_jw17p"]
+[ext_resource type="PackedScene" uid="uid://xbnfm68ahjdu" path="res://scenes/about_dialog.tscn" id="5_ymkfy"]
 [ext_resource type="Script" path="res://scripts/ide/Parser.gd" id="6_uey64"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f3wom"]
@@ -114,6 +115,8 @@ theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="explorer/panel/MarginContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
 
 [node name="Label" type="Label" parent="explorer/panel/MarginContainer/VBoxContainer"]
@@ -126,9 +129,41 @@ text = "EXPLORER"
 layout_mode = 2
 text = "Current File.."
 
-[node name="Tree" type="Tree" parent="explorer/panel/MarginContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="explorer/panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme = ExtResource("2_bph6x")
+text = "TRAFIC LIGHT"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="explorer/panel/MarginContainer/VBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="red" type="ColorRect" parent="explorer/panel/MarginContainer/VBoxContainer/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.996078, 0.219608, 0.286275, 0.313726)
+
+[node name="yellow" type="ColorRect" parent="explorer/panel/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(1, 1, 0.360784, 0.313726)
+
+[node name="green" type="ColorRect" parent="explorer/panel/MarginContainer/VBoxContainer/HBoxContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+color = Color(0.278431, 1, 0.698039, 0.313726)
+
+[node name="tbl_symbol_btn" type="Button" parent="explorer/panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Show Table Symbol"
+flat = true
 
 [node name="icon" type="Control" parent="."]
 anchors_preset = 0
@@ -372,11 +407,14 @@ flat = true
 
 [node name="parserbtn" type="Button" parent="actions/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_bph6x")
+disabled = true
 text = "Parser"
 flat = true
 
 [node name="semanthicbtn" type="Button" parent="actions/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("2_bph6x")
 disabled = true
 text = "Semanthic"
 flat = true
@@ -392,13 +430,51 @@ ok_button_text = "Guardar"
 file_mode = 4
 filters = PackedStringArray("*.lao")
 
+[node name="about_dialog" parent="." instance=ExtResource("5_ymkfy")]
+initial_position = 2
+visible = false
+transient = false
+exclusive = false
+
+[node name="symbol_table_dialog" type="AcceptDialog" parent="."]
+title = "Symbol Table"
+initial_position = 2
+size = Vector2i(320, 240)
+
+[node name="Control" type="Control" parent="symbol_table_dialog"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="symbol_table_dialog/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GridContainer" type="GridContainer" parent="symbol_table_dialog/Control/ScrollContainer"]
+layout_mode = 2
+
 [node name="Lexer" type="Node" parent="."]
 script = ExtResource("5_jw17p")
 
 [node name="Parser" type="Node" parent="."]
 script = ExtResource("6_uey64")
 
+[connection signal="pressed" from="explorer/panel/MarginContainer/VBoxContainer/tbl_symbol_btn" to="." method="_on_tbl_symbol_btn_pressed"]
 [connection signal="pressed" from="sup_bar/window_btns/HBoxContainer/quitbtn" to="." method="_on_quitbtn_pressed"]
+[connection signal="text_changed" from="editor/code_edit" to="." method="_on_code_edit_text_changed"]
 [connection signal="text_changed" from="editor/code_edit" to="Lexer" method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="actions/HBoxContainer/lexerbtn" to="Lexer" method="_on_lexerbtn_pressed"]
 [connection signal="pressed" from="actions/HBoxContainer/parserbtn" to="Parser" method="_on_parserbtn_pressed"]

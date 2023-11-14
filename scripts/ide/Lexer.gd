@@ -5,6 +5,12 @@ class_name Lexer_IDE
 @onready var code_edit = $"../editor/code_edit"
 @onready var status_terminal = $"../terminal/MarginContainer/status_terminal"
 
+@onready var red = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/red"
+@onready var yellow = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/yellow"
+@onready var green = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/green"
+
+@onready var scroll_container = $"../symbol_table_dialog/Control/ScrollContainer"
+var grid_container : GridContainer
 
 var has_success = false
 var has_error = false
@@ -19,11 +25,53 @@ var row : int = 1
 var col : int = 1
 
 func _ready():
-	lexer()
+	#lexer()
+	pass
 
 # make tokens
 func lexer():
+	for line in code_edit.get_line_count():
+		code_edit.set_line_background_color(line, '282c34')
+	code_edit.set_caret_line(0)
+	code_edit.set_caret_column(0)
+	
+	$"../actions/HBoxContainer/parserbtn".disabled = true
+	$"../actions/HBoxContainer/semanthicbtn".disabled = true
+	
+	grid_container = GridContainer.new()
+	grid_container.columns = 4
+	grid_container.size_flags_horizontal = Control.SIZE_EXPAND
+	grid_container.size_flags_horizontal += Control.SIZE_SHRINK_CENTER
+	
+	scroll_container.get_child(0).free()
+	scroll_container.add_child(grid_container)
+	
+	var label = Label.new()
+	label.text = "Token"
+	grid_container.add_child(label)
+	label = Label.new()
+	label.text = "Lexeme"
+	grid_container.add_child(label)
+	label = Label.new()
+	label.text = "Line"
+	grid_container.add_child(label)
+	label = Label.new()
+	label.text = "Column"
+	grid_container.add_child(label)
+	
 	init(code_edit.text)
+	red.color.a = 0.31
+	yellow.color.a = 0.31
+	green.color.a = 0.31
+	
+	red.color.a = 1
+	print("Get Ready!")
+	await get_tree().create_timer(0.5).timeout
+	
+	red.color.a = 0.31
+	yellow.color.a = 1
+	print("Making Lexer")
+	await get_tree().create_timer(0.5).timeout
 	
 	var token : Token
 	
@@ -32,6 +80,36 @@ func lexer():
 		if token == null:
 			break;
 		status_terminal.text += '\n' + str(token)
+		
+		
+		label = Label.new()
+		label.text = TokenType.token_types.find_key(token.kind)
+		grid_container.add_child(label)
+		
+		label = Label.new()
+		label.text = token.text
+		grid_container.add_child(label)
+		
+		label = Label.new()
+		label.text = str(token.position.x)
+		grid_container.add_child(label)
+		
+		label = Label.new()
+		label.text = str(token.position.y)
+		grid_container.add_child(label)
+		
+	status_terminal.text += '\nLexer Completed'
+	
+	if !has_error:
+		yellow.color.a = 0.31
+		green.color.a = 1
+		print("Lexer Completed")
+		$"../actions/HBoxContainer/parserbtn".disabled = false
+	else:
+		yellow.color.a = 0.31
+		red.color.a = 1
+		print("Lexer ERROR")
+		await get_tree().create_timer(0.5).timeout
 
 # get the first character
 func init(src : String):
@@ -48,7 +126,8 @@ func init(src : String):
 func nextChar():
 	if self.current_character == '\n':
 			self.row += 1
-			self.col = 0
+			self.col = 1
+	self.col += 1
 	self.current_position += 1
 	if self.current_position >= len(self.source):
 		self.current_character = '@EOF'
@@ -180,10 +259,9 @@ func get_token():
 			else:
 				# Unknown token!
 				abort(ErrorCompiler.make_string(ErrorCompiler.errors.ILEGAL_CHAR) + ': "' + self.current_character + '" at ' + str(current_position))
-				token = Token.new('?UNKNOWN?', TokenType.token_types.UNKNOW)
+				token = Token.new(self.current_character, TokenType.token_types.UNKNOW)
 	if token != null:
-		self.col =  (current_position + 1) / row
-		token.position = Vector2i(self.row, self.col)
+		token.position = Vector2i(self.row, self.col - 1)
 	self.nextChar()
 	return token
 
