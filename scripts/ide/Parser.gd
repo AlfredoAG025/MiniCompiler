@@ -6,6 +6,9 @@ class_name Parser_IDE
 @onready var status_terminal = $"../terminal/MarginContainer/status_terminal"
 @onready var code_edit = $"../editor/code_edit"
 
+@onready var success_audio = $"../success_audio"
+@onready var failure_audio = $"../failure_audio"
+
 @onready var red = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/red"
 @onready var yellow = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/yellow"
 @onready var green = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/green"
@@ -49,11 +52,13 @@ func parser(lexer_var):
 		yellow.color.a = 0.31
 		green.color.a = 1
 		print("Parsing Completed")
+		success_audio.play()
 		$"../actions/HBoxContainer/semanthicbtn".disabled = false
 	else:
 		yellow.color.a = 0.31
 		red.color.a = 1
 		print("Parsing ERROR")
+		failure_audio.play()
 		await get_tree().create_timer(0.5).timeout
 
 func program():

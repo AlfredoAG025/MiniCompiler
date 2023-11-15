@@ -10,6 +10,9 @@ class_name Semanthic_IDE
 @onready var yellow = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/yellow"
 @onready var green = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/green"
 
+@onready var success_audio = $"../success_audio"
+@onready var failure_audio = $"../failure_audio"
+
 var curToken : Token
 var peekToken : Token
 
@@ -49,10 +52,12 @@ func semanthic(lexer_var):
 		yellow.color.a = 0.31
 		green.color.a = 1
 		status_terminal.text += "\nSemanthic Completed"
+		success_audio.play()
 	else:
 		yellow.color.a = 0.31
 		red.color.a = 1
 		print("nSemanthic ERROR")
+		failure_audio.play()
 		await get_tree().create_timer(0.5).timeout
 
 func evaluate():

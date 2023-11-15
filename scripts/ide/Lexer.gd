@@ -9,6 +9,9 @@ class_name Lexer_IDE
 @onready var yellow = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/yellow"
 @onready var green = $"../explorer/panel/MarginContainer/VBoxContainer/HBoxContainer/green"
 
+@onready var success_audio = $"../success_audio"
+@onready var failure_audio = $"../failure_audio"
+
 @onready var scroll_container = $"../symbol_table_dialog/Control/ScrollContainer"
 var grid_container : GridContainer
 
@@ -105,10 +108,12 @@ func lexer():
 		green.color.a = 1
 		print("Lexer Completed")
 		$"../actions/HBoxContainer/parserbtn".disabled = false
+		success_audio.play()
 	else:
 		yellow.color.a = 0.31
 		red.color.a = 1
 		print("Lexer ERROR")
+		failure_audio.play()
 		await get_tree().create_timer(0.5).timeout
 
 # get the first character

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ce3fcxfdm0cnb"
+path="res://.godot/imported/SQUARE ENIX Lofi.mp3-26f76a96508b749a29e4323951dafce4.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/SQUARE ENIX Lofi.mp3"
+dest_files=["res://.godot/imported/SQUARE ENIX Lofi.mp3-26f76a96508b749a29e4323951dafce4.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
