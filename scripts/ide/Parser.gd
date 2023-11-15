@@ -57,6 +57,7 @@ func parser(lexer_var):
 	else:
 		yellow.color.a = 0.31
 		red.color.a = 1
+		status_terminal.text += '\nParsing ERROR'
 		print("Parsing ERROR")
 		failure_audio.play()
 		await get_tree().create_timer(0.5).timeout

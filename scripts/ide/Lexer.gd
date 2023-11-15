@@ -78,7 +78,7 @@ func lexer():
 	
 	var token : Token
 	
-	while self.current_character != '@EOF':
+	while self.current_character != '@EOF' and !has_error:
 		token = self.get_token()
 		if token == null:
 			break;
@@ -101,18 +101,18 @@ func lexer():
 		label.text = str(token.position.y)
 		grid_container.add_child(label)
 		
-	status_terminal.text += '\nLexer Completed'
+	
 	
 	if !has_error:
 		yellow.color.a = 0.31
 		green.color.a = 1
-		print("Lexer Completed")
+		status_terminal.text += '\nLexer Completed'
 		$"../actions/HBoxContainer/parserbtn".disabled = false
 		success_audio.play()
 	else:
 		yellow.color.a = 0.31
 		red.color.a = 1
-		print("Lexer ERROR")
+		status_terminal.text += '\nLexer ERROR'
 		failure_audio.play()
 		await get_tree().create_timer(0.5).timeout
 

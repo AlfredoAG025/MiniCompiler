@@ -57,6 +57,7 @@ func semanthic(lexer_var):
 		yellow.color.a = 0.31
 		red.color.a = 1
 		print("nSemanthic ERROR")
+		status_terminal.text += "\nSemanthic ERROR"
 		failure_audio.play()
 		await get_tree().create_timer(0.5).timeout
 
