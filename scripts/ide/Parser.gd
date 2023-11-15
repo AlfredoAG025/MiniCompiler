@@ -48,12 +48,12 @@ func parser(lexer_var):
 		status_terminal.text += "\nParsing Completed"
 		yellow.color.a = 0.31
 		green.color.a = 1
-		print("Lexer Completed")
+		print("Parsing Completed")
 		$"../actions/HBoxContainer/semanthicbtn".disabled = false
 	else:
 		yellow.color.a = 0.31
 		red.color.a = 1
-		print("Lexer ERROR")
+		print("Parsing ERROR")
 		await get_tree().create_timer(0.5).timeout
 
 func program():

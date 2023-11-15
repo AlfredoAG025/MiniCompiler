@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ctaj2rgpaqti4"]
+[gd_scene load_steps=24 format=3 uid="uid://ctaj2rgpaqti4"]
 
 [ext_resource type="Script" path="res://scripts/ide/main.gd" id="1_6fwd0"]
 [ext_resource type="Theme" uid="uid://cp8x7xc1gv58k" path="res://resources/main_theme.tres" id="2_bph6x"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/ide/Lexer.gd" id="5_jw17p"]
 [ext_resource type="PackedScene" uid="uid://xbnfm68ahjdu" path="res://scenes/about_dialog.tscn" id="5_ymkfy"]
 [ext_resource type="Script" path="res://scripts/ide/Parser.gd" id="6_uey64"]
+[ext_resource type="Script" path="res://scripts/ide/Semanthic.gd" id="8_ldarg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f3wom"]
 bg_color = Color(0.129412, 0.145098, 0.168627, 1)
@@ -472,11 +473,15 @@ script = ExtResource("5_jw17p")
 [node name="Parser" type="Node" parent="."]
 script = ExtResource("6_uey64")
 
+[node name="Semanthic" type="Node" parent="."]
+script = ExtResource("8_ldarg")
+
 [connection signal="pressed" from="explorer/panel/MarginContainer/VBoxContainer/tbl_symbol_btn" to="." method="_on_tbl_symbol_btn_pressed"]
 [connection signal="pressed" from="sup_bar/window_btns/HBoxContainer/quitbtn" to="." method="_on_quitbtn_pressed"]
 [connection signal="text_changed" from="editor/code_edit" to="." method="_on_code_edit_text_changed"]
 [connection signal="text_changed" from="editor/code_edit" to="Lexer" method="_on_code_edit_text_changed"]
 [connection signal="pressed" from="actions/HBoxContainer/lexerbtn" to="Lexer" method="_on_lexerbtn_pressed"]
 [connection signal="pressed" from="actions/HBoxContainer/parserbtn" to="Parser" method="_on_parserbtn_pressed"]
+[connection signal="pressed" from="actions/HBoxContainer/semanthicbtn" to="Semanthic" method="_on_semanthicbtn_pressed"]
 [connection signal="file_selected" from="open_file_dialog" to="." method="_on_file_dialog_file_selected"]
 [connection signal="file_selected" from="save_file_dialog" to="." method="_on_save_file_dialog_file_selected"]

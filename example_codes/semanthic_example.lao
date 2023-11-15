@@ -1,0 +1,3 @@
+int a = 2;
+double b = 2.5;
+chars c = "Text";
