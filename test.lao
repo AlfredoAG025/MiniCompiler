@@ -77,3 +77,39 @@ for (int i = 0; i < 10; i++){
         print "Se cumple la condición";
     }
 }
+
+#Casos Aceptados
+#Numero Maximo
+int a = 5; 
+int b = 7;  
+int c = 10; 
+ int max = a; 
+ if (b > max) { 
+    int  max = b; 
+ }  
+if (c > max) {  
+    int  max = c;  
+}  
+print  max; 
+
+#If- else, numero mayor que
+int x = 1; 
+if (x > 5) { 
+    print "x es mayor que 5"; 
+} else { 
+    print "x no es mayor que 5"; 
+} 
+#If-else, operacion y comparacion
+double x = 5.5; 
+double y = 2.0; 
+double result = x * y ; 
+if (result >= 10) { 
+    print "El resultado es mayor o igual a 10"; 
+} else { 
+    print "El resultado es menor a 10"; 
+} 
+
+#Lectura de datos; edad
+int age=0;
+read age;
+print  age;
