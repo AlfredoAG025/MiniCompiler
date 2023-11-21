@@ -51,11 +51,11 @@ You can make commentaries with the ***"#"*** symbol.
 
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: [a-zA-Z]|[0-9]|[+,-,*,/,(,),{,},<,>,=,!]|[", #59;]
-    q1 --> q1: [a-zA-Z]|[0-9]|[+,-,*,/,(,),{,},<,>,=,!]|[", #59;]
-    q1 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: [a-zA-Z]|[0-9]|[+,-,*,/,(,),{,},<,>,=,!]|[", #59;]
+	q1 --> q1: [a-zA-Z]|[0-9]|[+,-,*,/,(,),{,},<,>,=,!]|[", #59;]
+	q1 --> [*]: Final State
 ```
 
 #### Keywords
@@ -63,130 +63,130 @@ stateDiagram-v2
 ##### int
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: i
-    q1 --> q2: n
-    q2 --> q3: t
-    q3 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: i
+	q1 --> q2: n
+	q2 --> q3: t
+	q3 --> [*]: Final State
 ```
 
 ##### double
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: d
-    q1 --> q2: o
-    q2 --> q3: u
-    q3 --> q4: b
-    q4 --> q5: l
-    q5 --> q6: e
-    q6 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: d
+	q1 --> q2: o
+	q2 --> q3: u
+	q3 --> q4: b
+	q4 --> q5: l
+	q5 --> q6: e
+	q6 --> [*]: Final State
 ```
 
 ##### while
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: w
-    q1 --> q2: h
-    q2 --> q3: i
-    q3 --> q4: l
-    q4 --> q5: e
-    q5 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: w
+	q1 --> q2: h
+	q2 --> q3: i
+	q3 --> q4: l
+	q4 --> q5: e
+	q5 --> [*]: Final State
 ```
 
 ##### if
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: i
-    q1 --> q2: f
-    q2 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: i
+	q1 --> q2: f
+	q2 --> [*]: Final State
 ```
 
 ##### else
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: e
-    q1 --> q2: l
-    q2 --> q3: s
-    q3 --> q4: e
-    q4 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: e
+	q1 --> q2: l
+	q2 --> q3: s
+	q3 --> q4: e
+	q4 --> [*]: Final State
 ```
 
 ##### elif
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: e
-    q1 --> q2: l
-    q2 --> q3: i
-    q3 --> q4: f
-    q4 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: e
+	q1 --> q2: l
+	q2 --> q3: i
+	q3 --> q4: f
+	q4 --> [*]: Final State
 ```
 
 ##### and
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: a
-    q1 --> q2: n
-    q2 --> q3: d
-    q3 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: a
+	q1 --> q2: n
+	q2 --> q3: d
+	q3 --> [*]: Final State
 ```
 
 ##### or
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: o
-    q1 --> q2: r
-    q2 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: o
+	q1 --> q2: r
+	q2 --> [*]: Final State
 ```
 
 ##### not
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: n
-    q1 --> q2: o
-    q2 --> q3: t
-    q3 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: n
+	q1 --> q2: o
+	q2 --> q3: t
+	q3 --> [*]: Final State
 ```
 
 ##### true
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: t
-    q1 --> q2: r
-    q2 --> q3: u
-    q3 --> q4: e
-    q4 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: t
+	q1 --> q2: r
+	q2 --> q3: u
+	q3 --> q4: e
+	q4 --> [*]: Final State
 ```
 
 ##### false
 ```mermaid
 stateDiagram-v2
-    direction LR
-    [*] --> q0: Initial State
-    q0 --> q1: f
-    q1 --> q2: a
-    q2 --> q3: l
-    q3 --> q4: s
-    q4 --> q5: e
-    q5 --> [*]: Final State
+	direction LR
+	[*] --> q0: Initial State
+	q0 --> q1: f
+	q1 --> q2: a
+	q2 --> q3: l
+	q3 --> q4: s
+	q4 --> q5: e
+	q5 --> [*]: Final State
 ```
 
 ### Token Types
@@ -305,7 +305,7 @@ int b = 3;
 int c = a + b;
 # Comentary
 if (a < b){
-    print "hello";
+	print "hello";
 }
 ```
 
@@ -323,7 +323,7 @@ int d = a;
 ```
 int a = 1;
 if (a == 1){
-    print "It's one";
+	print "It's one";
 }
 ```
 
@@ -332,7 +332,7 @@ if (a == 1){
 ```
 int a = 10;
 while (a < 10){
-    print "Im in a while cycle";
+	print "Im in a while cycle";
 }
 ```
 
@@ -340,7 +340,7 @@ while (a < 10){
 
 ```
 for (int i = 0; i < 10; i++){
-    print "Im in a for cycle";
+	print "Im in a for cycle";
 }
 ```
 

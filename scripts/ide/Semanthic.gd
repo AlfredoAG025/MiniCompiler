@@ -39,7 +39,7 @@ func semanthic(lexer_var):
 	
 	red.color.a = 0.31
 	yellow.color.a = 1
-	print("Making Parser")
+	print("Making Semanthic")
 	await get_tree().create_timer(0.5).timeout
 	
 	#Initialize the cur and peek tokens
