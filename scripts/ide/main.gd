@@ -15,14 +15,16 @@ extends Control
 var help_popup : PopupMenu
 var file_popup : PopupMenu
 
-var absolute_root = ProjectSettings.globalize_path("res://")
+var absolute_path : String
 
-var lexer_docs_path = absolute_root + "/docs/lexer.pdf" 
-var parser_docs_path = absolute_root + "/docs/parser.pdf" 
-var semanthic_docs_path = absolute_root + "/docs/semanthic.pdf" 
+var lexer_docs_path = "/docs/lexer.pdf" 
+var parser_docs_path = "/docs/parser.pdf" 
+var semanthic_docs_path = "/docs/semanthic.pdf" 
 
 
 func _ready():
+	var dir = DirAccess.open('./')
+	absolute_path = dir.get_current_dir()
 	file_popup = filebtn.get_popup()
 	help_popup = helpbtn.get_popup()
 	
@@ -33,11 +35,11 @@ func _ready():
 func _on_help_item_pressed(id):
 	match id:
 		0:
-			OS.shell_open(lexer_docs_path)
+			OS.shell_open(absolute_path + lexer_docs_path)
 		1:
-			OS.shell_open(parser_docs_path)
+			OS.shell_open(absolute_path + parser_docs_path)
 		2:
-			OS.shell_open(semanthic_docs_path)
+			OS.shell_open(absolute_path + semanthic_docs_path)
 		4:
 			about_dialog.show()
 

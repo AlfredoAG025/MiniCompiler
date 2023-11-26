@@ -1,0 +1,10 @@
+# Compute Square Area
+
+int b = 0;
+int area = 0;
+
+print "What is the size of the Square?"; # Asking for size value
+read b;
+
+int area = b * b; 
+print area;					# Printing the Area

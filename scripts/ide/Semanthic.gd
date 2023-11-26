@@ -1,8 +1,8 @@
 extends Node
 
-class_name Semanthic_IDE
+class_name Semanthic
 
-@onready var lexer : Lexer_IDE = $"../Lexer" 
+@onready var lexer : Lexer = $"../Lexer" 
 @onready var status_terminal = $"../terminal/MarginContainer/status_terminal"
 @onready var code_edit = $"../editor/code_edit"
 

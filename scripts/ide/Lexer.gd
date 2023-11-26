@@ -1,6 +1,6 @@
 extends Node
 
-class_name Lexer_IDE
+class_name Lexer
 
 @onready var code_edit = $"../editor/code_edit"
 @onready var status_terminal = $"../terminal/MarginContainer/status_terminal"

@@ -1,8 +1,8 @@
 extends Node
 
-class_name Parser_IDE
+class_name Parser
 
-@onready var lexer : Lexer_IDE = $"../Lexer" 
+@onready var lexer : Lexer = $"../Lexer" 
 @onready var status_terminal = $"../terminal/MarginContainer/status_terminal"
 @onready var code_edit = $"../editor/code_edit"
 
@@ -153,23 +153,41 @@ func unary():
 
 # primary ::= number | ident
 func primary():
-	if checkToken(TokenType.token_types.INTEGER) or checkToken(TokenType.token_types.IDENTIFIER) or checkToken(TokenType.token_types.DECIMAL) or checkToken(TokenType.token_types.STRING):
+	if checkToken(TokenType.token_types.INTEGER) or checkToken(TokenType.token_types.IDENTIFIER) or checkToken(TokenType.token_types.DECIMAL) or checkToken(TokenType.token_types.STRING) or checkToken(TokenType.token_types.TRUE) or checkToken(TokenType.token_types.FALSE):
 		nextToken()
+		return true
 	else:
 		# ERROR!
-		abort("Expected a Number or Identifier or String at: " + str(curToken))
+		abort("Expected a Number or Identifier or Boolean or String at: " + str(curToken))
 
 func condition():
+	
 	if to_match(TokenType.token_types.LPAR):
 		nextToken()
-		#Expression
+		
+		if checkToken(TokenType.token_types.NOT):
+			nextToken()
+		var a = 1
+		var b = 3
+		if a != 0 or not b == true and 2 == 2:
+			print(2)
+		condition_expression()
+		while checkToken(TokenType.token_types.AND) or checkToken(TokenType.token_types.OR):
+			nextToken()
+			if checkToken(TokenType.token_types.NOT):
+				nextToken()
+			condition_expression()
+			
+		if to_match(TokenType.token_types.RPAR):
+			nextToken()
+	
+
+func condition_expression():
+	#Expression
 		expression()
 		if is_comparison_operator():
 			nextToken()
-			if checkToken(TokenType.token_types.INTEGER) or checkToken(TokenType.token_types.IDENTIFIER):
-				nextToken()
-			if to_match(TokenType.token_types.RPAR):
-				nextToken()
+			expression()
 		else:
 			abort("Expected a comparison operator at " + str(curToken))
 

@@ -1,0 +1,11 @@
+# 100 times hello world!
+
+int i = 0;
+int j = 0;
+while(i < 10){
+	while(j < 10){
+		print "Hello World!!!";
+		int j = j + 1;
+	}
+	int i = i + 1;
+}

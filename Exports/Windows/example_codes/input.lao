@@ -1,0 +1,6 @@
+# Input Example
+
+# We need to initialize the value first
+chars my_var = "Initial Value";
+
+read my_var;

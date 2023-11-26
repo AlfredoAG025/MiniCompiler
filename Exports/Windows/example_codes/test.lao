@@ -1,0 +1,115 @@
+#case 1 Uso de if con operadores lógicos:
+int a = 5;
+int b = 10;
+if (a > 0 &  b < 15){
+    print "Ambas condiciones son ciertas";
+}
+
+#case 1.1
+int a = 5;
+int b = 10;
+if (a > 0 &&  b < 15){
+    print "Ambas condiciones son ciertas";
+}
+
+#caso 2 else con operador relacional
+int a = 5;
+int b = 10;
+if (a > b){
+    print "a es mayor que b";
+} else {
+    print "b es mayor o igual que a";
+}
+
+#caso 3 elif con multiples condicionales
+int a = 5;
+if (a == 0){
+    print "a es zero";
+} elif (a > 0){
+    print "a es positivo";
+} else {
+    print "a es negativo";
+}
+
+#caso 4 while con expresiones
+int a = 1;
+while (a < 100 && a % 2 == 1){
+    print "Número impar inferior a 100";
+    a += 2;
+}
+
+#caso 5 for con operadores
+for (int i = 0; i < 5; i++){
+    print (i % 2 == 0) ? "incluido" : "no incluido";
+}
+
+#caso 6 if anidado
+int a = 10;
+if (a > 0){
+    if (a % 2 == 0){
+        print "a es un número par positivo";
+    } else {
+        print "a es un número impar positivo";
+    }
+} else {
+    print "a no es un número positivo";
+}
+
+#caso 7 while con operadores logicos y arimeticos
+int a = 1;
+while (a < 100 && (a * a) < 1000){
+    print "Cuadrado de a menos de 1000";
+    a++;
+}
+
+#caso 8 else con condiciones en for
+for (int i = 0; i < 10; i++){
+    if (i % 2 == 0){
+        print "Número par";
+    } else {
+        print "Número impar";
+    }
+}
+
+#caso 9 for con operador logico y expresion aritmetica
+for (int i = 0; i < 10; i++){
+    if (i > 5 && i * 2 < 15){
+        print "Se cumple la condición";
+    }
+}
+
+#Casos Aceptados
+#Numero Maximo
+int a = 5; 
+int b = 7;  
+int c = 10; 
+ int max = a; 
+ if (b > max) { 
+    int  max = b; 
+ }  
+if (c > max) {  
+    int  max = c;  
+}  
+print  max; 
+
+#If- else, numero mayor que
+int x = 1; 
+if (x > 5) { 
+    print "x es mayor que 5"; 
+} else { 
+    print "x no es mayor que 5"; 
+} 
+#If-else, operacion y comparacion
+double x = 5.5; 
+double y = 2.0; 
+double result = x * y ; 
+if (result >= 10) { 
+    print "El resultado es mayor o igual a 10"; 
+} else { 
+    print "El resultado es menor a 10"; 
+} 
+
+#Lectura de datos; edad
+int age=0;
+read age;
+print  age;

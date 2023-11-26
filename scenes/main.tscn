@@ -47,15 +47,20 @@ symbol_color = Color(0.670588, 0.698039, 0.74902, 1)
 function_color = Color(0.309804, 0.686275, 0.890196, 1)
 member_variable_color = Color(0.937255, 0.27451, 0.278431, 1)
 keyword_colors = {
+"and": Color(0.792157, 0.372549, 0.741176, 1),
 "chars": Color(0.792157, 0.372549, 0.741176, 1),
 "double": Color(0.792157, 0.372549, 0.741176, 1),
 "elif": Color(0.792157, 0.372549, 0.741176, 1),
 "else": Color(0.792157, 0.372549, 0.741176, 1),
+"false": Color(0.792157, 0.372549, 0.741176, 1),
 "for": Color(0.792157, 0.372549, 0.741176, 1),
 "if": Color(0.792157, 0.372549, 0.741176, 1),
 "int": Color(0.792157, 0.372549, 0.741176, 1),
+"not": Color(0.792157, 0.372549, 0.741176, 1),
+"or": Color(0.792157, 0.372549, 0.741176, 1),
 "print": Color(0.792157, 0.372549, 0.741176, 1),
 "read": Color(0.792157, 0.372549, 0.741176, 1),
+"true": Color(0.792157, 0.372549, 0.741176, 1),
 "while": Color(0.792157, 0.372549, 0.741176, 1)
 }
 color_regions = {
@@ -425,6 +430,7 @@ flat = true
 
 [node name="open_file_dialog" parent="." instance=ExtResource("3_pde2l")]
 visible = false
+access = 2
 filters = PackedStringArray("*.lao")
 
 [node name="save_file_dialog" parent="." instance=ExtResource("3_pde2l")]
@@ -432,6 +438,7 @@ title = "Save a File"
 visible = false
 ok_button_text = "Guardar"
 file_mode = 4
+access = 2
 filters = PackedStringArray("*.lao")
 
 [node name="about_dialog" parent="." instance=ExtResource("5_ymkfy")]
@@ -487,8 +494,6 @@ stream = ExtResource("10_pu511")
 
 [node name="lofi_music" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("11_mxwwf")
-volume_db = -5.0
-autoplay = true
 
 [connection signal="pressed" from="explorer/panel/MarginContainer/VBoxContainer/tbl_symbol_btn" to="." method="_on_tbl_symbol_btn_pressed"]
 [connection signal="pressed" from="sup_bar/window_btns/HBoxContainer/quitbtn" to="." method="_on_quitbtn_pressed"]
